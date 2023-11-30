@@ -7,7 +7,7 @@ import Cross from 'src/assets/icons/Cross';
 import { FilledButton } from '../reusable';
 import { Box, CloseButton, HeaderText, ModalContent, ModalHeader, Text } from './styles';
 
-export default function CancelAppointmentModal({
+export function CancelAppointmentModal({
   open,
   setOpen,
 }: {

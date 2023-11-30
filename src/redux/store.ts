@@ -12,6 +12,7 @@ import { accountVerificationApi } from 'src/redux/api/accountVerificationAPI';
 import authApi from 'src/redux/api/authApi';
 import { availableDaysReducer } from 'src/redux/slices/availableDaysSlice';
 import { rateReducer } from 'src/redux/slices/rateSlice';
+import { appointmentReducer } from './slices/appointmentSlice';
 
 const persistConfig = {
   key: 'root',
@@ -28,6 +29,7 @@ const store = configureStore({
     address: addressReducer,
     token: persistedTokenReducer,
     availableDays: availableDaysReducer,
+    appointment: appointmentReducer,
     hourlyRate: rateReducer,
     [authApi.reducerPath]: authApi.reducer,
     [accountVerificationApi.reducerPath]: accountVerificationApi.reducer,
