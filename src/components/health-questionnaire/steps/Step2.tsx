@@ -38,10 +38,10 @@ const Step2 = ({ onNext, onBack, stepKey, activities }: Step2Props): JSX.Element
   const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const updatedNote = event.target.value;
     setNote(updatedNote);
+    dispatch(saveNote({ step: stepKey, note: updatedNote }));
   };
 
   const handleSubmit = (): void => {
-    dispatch(saveNote({ step: stepKey, note }));
     onNext();
   };
 
