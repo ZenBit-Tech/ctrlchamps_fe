@@ -21,7 +21,6 @@ export default function Login(): JSX.Element {
         text={translate('loginForm.title')}
         callback={(): Promise<boolean> => router.push(ROUTES.home)}
         iconType="back"
-        showIcon
       />
       <LoginWrapper>
         <>

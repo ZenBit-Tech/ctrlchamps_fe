@@ -74,7 +74,6 @@ export default function CreateAppointmentPage(): JSX.Element {
         text={translate('create_appointment.header_text')}
         iconType="close"
         callback={handleOpen}
-        showIcon
       />
       <Background sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
         <HorizontalStepper

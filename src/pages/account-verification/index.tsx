@@ -31,7 +31,6 @@ const AccountVerification: React.FC<AccountVerificationProps> = (): JSX.Element 
         text={t('account_verification.account_verification')}
         callback={(): Promise<boolean> => router.push(ROUTES.sign_up)}
         iconType="back"
-        showIcon
       />
       {isSubmitted ? (
         <SuccessfulVerification profile={role} />
