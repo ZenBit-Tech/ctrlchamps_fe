@@ -124,14 +124,23 @@ export default function AppointmentDrawer({
       </DoubleButtonBox>
     ),
     [APPOINTMENT_STATUS.Virtual]: VIRTUAL_COMPONENT,
-    [APPOINTMENT_STATUS.SignedCaregiver]: VIRTUAL_COMPONENT,
+    [APPOINTMENT_STATUS.SignedCaregiver]: role === USER_ROLE.seeker && VIRTUAL_COMPONENT,
+    [APPOINTMENT_STATUS.SignedSeeker]: role === USER_ROLE.caregiver && VIRTUAL_COMPONENT,
   };
 
   const handleSignInAgreement = async (): Promise<void> => {
-    const newAppointmentStatus =
-      appointment?.status === APPOINTMENT_STATUS.SignedCaregiver
-        ? APPOINTMENT_STATUS.Active
-        : APPOINTMENT_STATUS.SignedSeeker;
+    const STATUS_MAP = {
+      [USER_ROLE.seeker]: {
+        [APPOINTMENT_STATUS.SignedCaregiver]: APPOINTMENT_STATUS.Active,
+        default: APPOINTMENT_STATUS.SignedSeeker,
+      },
+      [USER_ROLE.caregiver]: {
+        [APPOINTMENT_STATUS.SignedSeeker]: APPOINTMENT_STATUS.Active,
+        default: APPOINTMENT_STATUS.SignedCaregiver,
+      },
+    };
+
+    const newAppointmentStatus = STATUS_MAP[role][appointment!.status] ?? STATUS_MAP[role].default;
 
     try {
       await updateAppointment({
