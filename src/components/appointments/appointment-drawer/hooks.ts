@@ -41,7 +41,6 @@ export function useAppointmentDrawer({
   const { data: appointment, isLoading } = useGetAppointmentQuery(selectedAppointmentId);
 
   const formattedStartDate = appointment && getFormattedDate(appointment.startDate);
-  // const formattedStartDate = appointment && appointment.startDate;
 
   const handleCancelModalOpen = (): void => {
     setIsCancelModalOpen(true);
