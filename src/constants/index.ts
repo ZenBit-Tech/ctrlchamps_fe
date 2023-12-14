@@ -43,7 +43,21 @@ export const APPOINTMENT_STATUS = {
   Rejected: 'Rejected',
   Accepted: 'Accepted',
   Virtual: 'Virtual assessment',
+  SignedCaregiver: 'Signed by caregiver',
+  SignedSeeker: 'Signed by seeker',
   Active: 'Active',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
+};
+
+
+export const VIRTUAL_ASSESSMENT_STATUS = {
+  Proposed: 'Proposed',
+  Accepted: 'Accepted',
+  Rejected: 'Rejected',
+  Finished: 'Finished',
+
+export const APPOINTMENT_TYPE = {
+  OneTime: 'One time',
+  Recurring: 'Recurring',
 };
