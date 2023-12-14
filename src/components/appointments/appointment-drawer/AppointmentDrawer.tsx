@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { IconButton, Checkbox, FormControlLabel } from '@mui/material';
 
 import { useLocales } from 'src/locales';
-import { APPOINTMENT_STATUS } from 'src/constants';
+import { APPOINTMENT_STATUS, USER_ROLE } from 'src/constants';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
 import Modal from 'src/components/reusable/modal/Modal';
@@ -37,15 +37,17 @@ import {
 import { useAppointmentDrawer } from './hooks';
 
 interface AppointmentsDrawerProps {
+  role: string;
   isOpen: boolean;
   onClose: () => void;
   setIsDrawerOpen: Dispatch<SetStateAction<boolean>>;
-  setIsCaregiverDrawerOpen: Dispatch<SetStateAction<boolean>>;
-  setCaregiverId: Dispatch<SetStateAction<string>>;
+  setIsCaregiverDrawerOpen?: Dispatch<SetStateAction<boolean>>;
+  setCaregiverId?: Dispatch<SetStateAction<string>>;
   selectedAppointmentId: string;
 }
 
 export default function AppointmentDrawer({
+  role,
   isOpen,
   onClose,
   setIsDrawerOpen,
@@ -77,9 +79,11 @@ export default function AppointmentDrawer({
   const [updateAppointment] = useUpdateAppointmentMutation();
 
   const handleCaregiverDrawerOpen = (caregiverId: string): void => {
-    setCaregiverId(caregiverId);
-    setIsCaregiverDrawerOpen(true);
-    setIsDrawerOpen(false);
+    if (setCaregiverId && setIsCaregiverDrawerOpen) {
+      setCaregiverId(caregiverId);
+      setIsCaregiverDrawerOpen(true);
+      setIsDrawerOpen(false);
+    }
   };
 
   if (isLoading) return null;
@@ -156,28 +160,43 @@ export default function AppointmentDrawer({
             <AppointmentName>{appointment?.name}</AppointmentName>
             <AppointmentStatus status={appointment!.status} />
           </Block>
-          <Block>
-            <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
-            <CaregiverBlock>
-              <DrawerAvatar
-                src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                alt={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
-              />
-              <CaregiverName>
-                {appointment?.caregiverInfo.user.firstName}{' '}
-                {appointment?.caregiverInfo.user.lastName}
-              </CaregiverName>
-              <StyledIconButton
-                edge="end"
-                aria-label="open-drawer"
-                onClick={(): void =>
-                  appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
-                }
-              >
-                <RightAction />
-              </StyledIconButton>
-            </CaregiverBlock>
-          </Block>
+          {role === USER_ROLE.seeker ? (
+            <Block>
+              <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
+              <CaregiverBlock>
+                <DrawerAvatar
+                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
+                  alt={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
+                />
+                <CaregiverName>
+                  {appointment?.caregiverInfo.user.firstName}{' '}
+                  {appointment?.caregiverInfo.user.lastName}
+                </CaregiverName>
+                <StyledIconButton
+                  edge="end"
+                  aria-label="open-drawer"
+                  onClick={(): void =>
+                    appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
+                  }
+                >
+                  <RightAction />
+                </StyledIconButton>
+              </CaregiverBlock>
+            </Block>
+          ) : (
+            <Block>
+              <SubTitle>{translate('appointments_page.drawer.patient')}</SubTitle>
+              <CaregiverBlock>
+                <DrawerAvatar
+                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
+                  alt={`${appointment?.user.firstName} ${appointment?.user.lastName}`}
+                />
+                <CaregiverName>
+                  {appointment?.user.firstName} {appointment?.user.lastName}
+                </CaregiverName>
+              </CaregiverBlock>
+            </Block>
+          )}
           <Block>
             <SubTitle>{translate('appointments_page.drawer.date')}</SubTitle>
             <DateText>{formattedStartDate}</DateText>
@@ -243,6 +262,7 @@ export default function AppointmentDrawer({
         onSignIn={handleAgreementModalOpen}
         isActive={isCompleteModalOpen}
         appointment={appointment}
+        role={role}
       />
     </>
   );

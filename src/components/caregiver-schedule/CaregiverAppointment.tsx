@@ -21,7 +21,7 @@ import { CaregiverAppointmentI } from './types';
 type Props = {
   appointmentDays: CaregiverAppointmentI[];
   appointmentDay: Date;
-  openDrawer: () => void;
+  openDrawer: (appointmentId: string) => void;
 };
 
 export default function CaregiverAppointment({
@@ -57,7 +57,7 @@ export default function CaregiverAppointment({
               </Details>
             </AppointmentDetails>
           </AppointmentInfo>
-          <Arrow onClick={openDrawer} />
+          <Arrow onClick={(): void => openDrawer(appointment.id)} />
         </Task>
       ))}
     </Stack>

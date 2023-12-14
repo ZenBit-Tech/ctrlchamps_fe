@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Appointment } from 'src/components/appointments/types';
+import { CaregiverAppointmentI } from 'src/components/caregiver-schedule/types';
 import { PreviewCaregiver } from 'src/components/create-appointment-fourth/types';
 import { AppointmentType } from 'src/constants/types';
 import { route } from 'src/redux/api/routes';
@@ -133,6 +134,10 @@ export const appointmentApi = createApi({
       query: (id) => ({ url: `${route.appointment}/${id}` }),
       providesTags: (result, error, id) => [{ type: 'Appointments', id }],
     }),
+    getAppointmentsByDate: builder.query<CaregiverAppointmentI[], string>({
+      query: (date) => ({ url: `${route.appointment}${route.date}/${date}` }),
+      providesTags: ['Appointments'],
+    }),
     updateAppointment: builder.mutation<void, Partial<Appointment> & Pick<Appointment, 'id'>>({
       query: ({ id, ...appointment }) => ({
         url: `${route.appointment}/${id}`,
@@ -162,6 +167,7 @@ export const {
   useGetAppointmentQuery,
   useUpdateAppointmentMutation,
   useCreateAppointmentMutation,
+  useGetAppointmentsByDateQuery,
 } = appointmentApi;
 
 export default appointmentApi;

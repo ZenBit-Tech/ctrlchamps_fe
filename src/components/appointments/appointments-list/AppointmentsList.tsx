@@ -6,7 +6,7 @@ import AppointmentStatus from 'src/components/appointments/appointment-status/Ap
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
 import CaregiverDrawer from 'src/components/reusable/drawer/caregiver-drawer/CaregiverDrawer';
 import { AppointmentsProps } from 'src/components/appointments/types';
-import { APPOINTMENT_STATUS } from 'src/constants';
+import { APPOINTMENT_STATUS, USER_ROLE } from 'src/constants';
 
 import { Item, RejectedTitle, TextContainer, Title } from './styles';
 
@@ -54,6 +54,7 @@ export default function AppointmentsList({ appointments }: AppointmentsProps): J
       </ul>
       {selectedAppointmentId && (
         <AppointmentDrawer
+          role={USER_ROLE.seeker}
           isOpen={isDrawerOpen}
           setIsDrawerOpen={setIsDrawerOpen}
           setIsCaregiverDrawerOpen={setIsCaregiverDrawerOpen}

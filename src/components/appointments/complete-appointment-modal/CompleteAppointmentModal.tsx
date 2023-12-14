@@ -6,6 +6,7 @@ import Cross from 'src/assets/icons/Cross';
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
 import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
 import { DetailedAppointment } from 'src/components/appointments/types';
+import { USER_ROLE } from 'src/constants';
 
 import {
   BackDrop,
@@ -35,6 +36,7 @@ interface IProps {
   onSignIn: () => void;
   isActive: boolean;
   appointment?: DetailedAppointment;
+  role: string;
 }
 
 export default function CompleteAppointmentModal({
@@ -43,6 +45,7 @@ export default function CompleteAppointmentModal({
   onSignIn,
   isActive,
   appointment,
+  role,
 }: IProps): JSX.Element | null {
   const { translate } = useLocales();
 
@@ -76,18 +79,34 @@ export default function CompleteAppointmentModal({
               </StyledIconButton>
             </OpenAppointmentBlock>
           </Block>
-          <Block>
-            <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
-            <CaregiverBlock>
-              <DrawerAvatar
-                src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
-                alt={`${appointment.caregiverInfo.user.firstName} ${appointment.caregiverInfo.user.lastName}`}
-              />
-              <CaregiverName>
-                {appointment.caregiverInfo.user.firstName} {appointment.caregiverInfo.user.lastName}
-              </CaregiverName>
-            </CaregiverBlock>
-          </Block>
+          {role === USER_ROLE.seeker ? (
+            <Block>
+              <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
+              <CaregiverBlock>
+                <DrawerAvatar
+                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
+                  alt={`${appointment.caregiverInfo.user.firstName} ${appointment.caregiverInfo.user.lastName}`}
+                />
+                <CaregiverName>
+                  {appointment.caregiverInfo.user.firstName}{' '}
+                  {appointment.caregiverInfo.user.lastName}
+                </CaregiverName>
+              </CaregiverBlock>
+            </Block>
+          ) : (
+            <Block>
+              <SubTitle>{translate('appointments_page.drawer.patient')}</SubTitle>
+              <CaregiverBlock>
+                <DrawerAvatar
+                  src={getMockCaregiverAvatar(SMALL_CAREGIVER_AVATAR_SIZE)}
+                  alt={`${appointment?.user.firstName} ${appointment?.user.lastName}`}
+                />
+                <CaregiverName>
+                  {appointment?.user.firstName} {appointment?.user.lastName}
+                </CaregiverName>
+              </CaregiverBlock>
+            </Block>
+          )}
           <Block>
             <SubTitle>{translate('appointments_page.drawer.tasks')}</SubTitle>
             <TaskList>

@@ -8,10 +8,12 @@ import { TabType } from 'src/components/reusable/header/enums';
 import { ActiveTab } from 'src/components/reusable/header/types';
 import { useLocales } from 'src/locales';
 import { useGetAllAppointmentsQuery } from 'src/redux/api/appointmentApi';
+import { USER_ROLE } from 'src/constants';
 
 export default function HomePage(): JSX.Element | null {
   const { translate } = useLocales();
   const [activeTab, setActiveTab] = useState<ActiveTab>(null);
+  const role = USER_ROLE.seeker;
 
   const { data: appointments, isSuccess, isLoading } = useGetAllAppointmentsQuery();
 
@@ -23,9 +25,14 @@ export default function HomePage(): JSX.Element | null {
         <title>{translate('app_title')}</title>
       </Head>
       <MainHeader activeTab={activeTab} setActiveTab={setActiveTab} />
-
-      <CaregiverSchedule isCalendarVisible={activeTab === TabType.appointment} />
-
+      {role === USER_ROLE.caregiver && (
+        <CaregiverSchedule isCalendarVisible={activeTab === TabType.appointment} />
+      )}
+      {role === USER_ROLE.seeker && isSuccess && appointments.length > 0 && (
+        <Appointments appointments={appointments} />
+      )}
+      {(role === USER_ROLE.seeker && !isSuccess) ||
+        (role === USER_ROLE.seeker && appointments?.length === 0 && <BookAppointment />)}
     </>
   );
 }
