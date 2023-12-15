@@ -1,7 +1,7 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import { Avatar, Button, List, ListItemText } from '@mui/material';
+import { Avatar, Button, IconButton, List, ListItemText } from '@mui/material';
 import { format } from 'date-fns';
 
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
@@ -38,6 +38,7 @@ const VirtualAssessmentRequestModal = ({
   appointment,
   isOpen,
   switchModalVisibility,
+  openDrawer,
 }: VirtualAssessmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
 
@@ -81,7 +82,9 @@ const VirtualAssessmentRequestModal = ({
             <AppointmentParagraph>
               {translate('request_appointment.open_original_appointment')}
             </AppointmentParagraph>
-            <ChevronRightIcon color="primary" />
+            <IconButton onClick={openDrawer}>
+              <ChevronRightIcon color="primary" />
+            </IconButton>
           </AppointmentModalBlockParagraph>
         </AppointmentModalBlock>
 

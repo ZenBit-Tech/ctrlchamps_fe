@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { IconButton, Checkbox, FormControlLabel } from '@mui/material';
 
 import { useLocales } from 'src/locales';
-import { APPOINTMENT_STATUS, USER_ROLE } from 'src/constants';
+import { APPOINTMENT_STATUS, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
 import Drawer from 'src/components/reusable/drawer/Drawer';
 import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
 import Modal from 'src/components/reusable/modal/Modal';
@@ -18,6 +18,7 @@ import RightAction from 'src/assets/icons/RightAction';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
+import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
 import {
   DrawerBody,
   Block,
@@ -67,10 +68,9 @@ export default function AppointmentDrawer({
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
-    isVirtualAssessmentAccepted,
-    isVirtualAssessmentDone,
     appointment,
     formattedStartDate,
+    virtualAssessment,
     handleCancelModalOpen,
     handleCancelModalClose,
     handleCompleteModalOpen,
@@ -99,7 +99,7 @@ export default function AppointmentDrawer({
 
   const VIRTUAL_COMPONENT = (
     <>
-      {isVirtualAssessmentDone ? (
+      {virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Finished ? (
         <StyledButton type="button" variant="contained" onClick={handleCompleteModalOpen}>
           {translate('appointments_page.complete_button')}
         </StyledButton>
@@ -107,7 +107,7 @@ export default function AppointmentDrawer({
         <StyledButton
           type="button"
           variant="contained"
-          disabled={!isVirtualAssessmentAccepted}
+          disabled={virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted}
           onClick={handleVirtualAssessmentModalOpen}
         >
           {translate('appointments_page.virtual_button')}
@@ -278,16 +278,27 @@ export default function AppointmentDrawer({
         appointment={appointment}
         role={role}
       />
-      <VirtualAssessmentModal
-        caregiverName=""
-        onClose={handleVirtualAssessmentModalClose}
-        isActive={isVirtualAssessmentModalOpen}
-        openDrawer={openOriginalAppointment}
-        openCaregiverProfile={(): void =>
-          appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
-        }
-        openVirtualAssessmentSuccess={handleVirtualAssessmentSuccessModalOpen}
-      />
+      {role === USER_ROLE.seeker && (
+        <VirtualAssessmentModal
+          caregiverName={`${appointment?.caregiverInfo.user.firstName} ${appointment?.caregiverInfo.user.lastName}`}
+          appointmentId={selectedAppointmentId}
+          onClose={handleVirtualAssessmentModalClose}
+          isActive={isVirtualAssessmentModalOpen}
+          openDrawer={openOriginalAppointment}
+          openCaregiverProfile={(): void =>
+            appointment && handleCaregiverDrawerOpen(appointment?.caregiverInfo.user.id)
+          }
+          openVirtualAssessmentSuccess={handleVirtualAssessmentSuccessModalOpen}
+        />
+      )}
+      {role === USER_ROLE.caregiver && appointment && (
+        <VirtualAssessmentRequestModal
+          appointment={appointment}
+          isOpen={isVirtualAssessmentModalOpen}
+          switchModalVisibility={handleVirtualAssessmentModalClose}
+          openDrawer={openOriginalAppointment}
+        />
+      )}
       <VirtualAssessmentSuccess
         isActive={isVirtualAssessmentSuccessOpen}
         handleClose={handleVirtualAssessmentSuccessModalClose}

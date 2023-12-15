@@ -583,6 +583,7 @@ const en = {
   request_appointment: {
     appointment: 'Appointment',
     client: 'Client',
+    caregiver: 'Caregiver',
     date_and_time: 'Date & Time',
     health_questionnaire: 'Health questionnaire',
     tasks: 'Tasks',
@@ -591,6 +592,7 @@ const en = {
       reject: 'Reject',
       accept: 'Accept',
       view: 'View',
+      request: 'Request',
     },
     virtual_assessment: 'Virtual Assessment',
     open_original_appointment: 'Open Original Appointment',
