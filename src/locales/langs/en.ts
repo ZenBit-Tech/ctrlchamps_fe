@@ -524,6 +524,7 @@ const en = {
     cancel_appointment_button: 'Cancel appointment',
     virtual_button: 'View virtual assessment',
     complete_button: 'Complete appointment',
+    accept_button: 'Accept appointment',
     contract_button: 'View the signed contract',
     sign_in_button: 'Sign in the contract',
     sign_agreement_button: 'Sign agreement',

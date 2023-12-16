@@ -102,11 +102,32 @@ export default function AppointmentDrawer({
     </>
   );
 
+  const handleAcceptAppointment = async (): Promise<void> => {
+    try {
+      await updateAppointment({
+        id: selectedAppointmentId,
+        status: APPOINTMENT_STATUS.Accepted,
+      }).unwrap();
+
+      handleAgreementModalClose();
+      setIsTermsAccepted(false);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   const DRAWER_FOOTERS = {
     [APPOINTMENT_STATUS.Pending]: (
-      <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
-        {translate('appointments_page.cancel_button')}
-      </CancelBtn>
+      <DoubleButtonBox>
+        {role === USER_ROLE.caregiver && (
+          <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
+            {translate('appointments_page.accept_button')}
+          </StyledButton>
+        )}
+        <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
+          {translate('appointments_page.cancel_button')}
+        </CancelBtn>
+      </DoubleButtonBox>
     ),
     [APPOINTMENT_STATUS.Accepted]: (
       <StyledButton type="button" variant="contained">
