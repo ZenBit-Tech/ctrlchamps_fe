@@ -116,11 +116,32 @@ export default function AppointmentDrawer({
     </>
   );
 
+  const handleAcceptAppointment = async (): Promise<void> => {
+    try {
+      await updateAppointment({
+        id: selectedAppointmentId,
+        status: APPOINTMENT_STATUS.Accepted,
+      }).unwrap();
+
+      handleAgreementModalClose();
+      setIsTermsAccepted(false);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   const DRAWER_FOOTERS = {
     [APPOINTMENT_STATUS.Pending]: (
-      <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
-        {translate('appointments_page.cancel_button')}
-      </CancelBtn>
+      <DoubleButtonBox>
+        {role === USER_ROLE.caregiver && (
+          <StyledButton type="button" variant="contained" onClick={handleAcceptAppointment}>
+            {translate('appointments_page.accept_button')}
+          </StyledButton>
+        )}
+        <CancelBtn type="button" variant="outlined" onClick={handleCancelModalOpen}>
+          {translate('appointments_page.cancel_button')}
+        </CancelBtn>
+      </DoubleButtonBox>
     ),
     [APPOINTMENT_STATUS.Accepted]: (
       <StyledButton type="button" variant="contained">
@@ -138,14 +159,23 @@ export default function AppointmentDrawer({
       </DoubleButtonBox>
     ),
     [APPOINTMENT_STATUS.Virtual]: VIRTUAL_COMPONENT,
-    [APPOINTMENT_STATUS.SignedCaregiver]: VIRTUAL_COMPONENT,
+    [APPOINTMENT_STATUS.SignedCaregiver]: role === USER_ROLE.seeker && VIRTUAL_COMPONENT,
+    [APPOINTMENT_STATUS.SignedSeeker]: role === USER_ROLE.caregiver && VIRTUAL_COMPONENT,
   };
 
   const handleSignInAgreement = async (): Promise<void> => {
-    const newAppointmentStatus =
-      appointment?.status === APPOINTMENT_STATUS.SignedCaregiver
-        ? APPOINTMENT_STATUS.Active
-        : APPOINTMENT_STATUS.SignedSeeker;
+    const STATUS_MAP = {
+      [USER_ROLE.seeker]: {
+        [APPOINTMENT_STATUS.SignedCaregiver]: APPOINTMENT_STATUS.Active,
+        default: APPOINTMENT_STATUS.SignedSeeker,
+      },
+      [USER_ROLE.caregiver]: {
+        [APPOINTMENT_STATUS.SignedSeeker]: APPOINTMENT_STATUS.Active,
+        default: APPOINTMENT_STATUS.SignedCaregiver,
+      },
+    };
+
+    const newAppointmentStatus = STATUS_MAP[role][appointment!.status] ?? STATUS_MAP[role].default;
 
     try {
       await updateAppointment({
