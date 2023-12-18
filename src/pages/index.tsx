@@ -1,38 +1,25 @@
-import Head from 'next/head';
-import { useState } from 'react';
-import CaregiverSchedule from 'src/components/caregiver-schedule/CaregiverSchedule';
-import Appointments from 'src/components/appointments/Appointments';
-import BookAppointment from 'src/components/book-appointment/BookAppointment';
-import MainHeader from 'src/components/reusable/header/MainHeader';
-import { TabType } from 'src/components/reusable/header/enums';
-import { ActiveTab } from 'src/components/reusable/header/types';
-import { useLocales } from 'src/locales';
-import { useGetAllAppointmentsQuery } from 'src/redux/api/appointmentApi';
-import { USER_ROLE } from 'src/constants';
+import { useRouter } from 'next/router';
+import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
+import { DEFAULT_REDIRECT_PATH, USER_ROLE } from 'src/constants';
+import { useTypedSelector } from 'src/redux/store';
+import AppointmentsPage from '../components/appointments/AppointmentsPage';
+import CaregiverSchedulePage from '../components/caregiver-schedule/CaregiverSchedulePage';
 
 export default function HomePage(): JSX.Element | null {
-  const { translate } = useLocales();
-  const [activeTab, setActiveTab] = useState<ActiveTab>(null);
-  const role = USER_ROLE.seeker;
+  const router = useRouter();
+  const user = useTypedSelector((state) => state.user.user);
 
-  const { data: appointments, isSuccess, isLoading } = useGetAllAppointmentsQuery();
+  if (!user) {
+    router.replace(DEFAULT_REDIRECT_PATH);
+    return null;
+  }
 
-  if (isLoading) return null;
+  const { role } = user;
 
   return (
-    <>
-      <Head>
-        <title>{translate('app_title')}</title>
-      </Head>
-      <MainHeader activeTab={activeTab} setActiveTab={setActiveTab} />
-      {role === USER_ROLE.caregiver && (
-        <CaregiverSchedule isCalendarVisible={activeTab === TabType.appointment} />
-      )}
-      {role === USER_ROLE.seeker && isSuccess && appointments.length > 0 && (
-        <Appointments appointments={appointments} />
-      )}
-      {(role === USER_ROLE.seeker && !isSuccess) ||
-        (role === USER_ROLE.seeker && appointments?.length === 0 && <BookAppointment />)}
-    </>
+    <PrivateRoute>
+      {role === USER_ROLE.Caregiver && <CaregiverSchedulePage />}
+      {role === USER_ROLE.Seeker && <AppointmentsPage />}
+    </PrivateRoute>
   );
 }

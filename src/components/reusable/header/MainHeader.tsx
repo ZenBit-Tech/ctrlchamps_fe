@@ -5,10 +5,11 @@ import AppointmentsIcon from 'src/assets/icons/AppointmentsIcon';
 import ChatIcon from 'src/assets/icons/ChatIcon';
 import NotificationIcon from 'src/assets/icons/NotificationIcon';
 import { IconWrapper } from 'src/components/confirm-appointment/style';
+import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useTypedSelector } from 'src/redux/store';
 import { ROUTES } from 'src/routes';
-import { USER_ROLE } from 'src/constants';
+import { TabType } from './enums';
 import {
   AppointmentsSection,
   AppointmentsText,
@@ -26,7 +27,6 @@ import {
   SecondPart,
 } from './styles';
 import { ActiveTab } from './types';
-import { TabType } from './enums';
 
 type Props = {
   activeTab: ActiveTab;
@@ -35,12 +35,15 @@ type Props = {
 
 export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element {
   const { translate } = useLocales();
-  const { firstName, lastName } = useTypedSelector(
-    (state) => state.personalDetails.personalDetails
-  );
-  const { role } = useTypedSelector((state) => state.role);
 
+  const user = useTypedSelector((state) => state.user.user);
+
+  const [activeTab, setActiveTab] = useState<ActiveTab>(TabType.appointment);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+
+  if (!user) return null;
+
+  const { role, firstName, lastName } = user;
 
   const openMenu = (): void => setIsMenuVisible(!isMenuVisible);
   const chooseActiveTab = (value: ActiveTab): void => setActiveTab(value);
@@ -58,7 +61,7 @@ export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Elem
         >
           <AppointmentsIcon />
           <AppointmentsText>
-            {role === USER_ROLE.seeker ? translate('appointments') : translate('schedule')}
+            {role === USER_ROLE.Seeker ? translate('appointments') : translate('schedule')}
           </AppointmentsText>
         </AppointmentsSection>
         <ChatSection
