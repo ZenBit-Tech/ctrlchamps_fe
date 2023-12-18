@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, IconButton } from '@mui/material';
+import { Checkbox, FormControlLabel, Grid, IconButton } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
@@ -15,8 +15,16 @@ import Modal from 'src/components/reusable/modal/Modal';
 import { APPOINTMENT_STATUS, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
 import { useLocales } from 'src/locales';
 
+import { CheckCircle } from '@mui/icons-material';
+import { ChildModal } from 'src/components/appointment-request-modal/ChildModal';
+import {
+  AppointmentModalBlock,
+  AppointmentModalBlockParagraph,
+  HealthQuestionnaireBlock,
+} from 'src/components/appointment-request-modal/styles';
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
+import { STEPS } from 'src/components/health-questionnaire/constants';
 import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { useAppointmentDrawer } from './hooks';
@@ -262,6 +270,43 @@ export default function AppointmentDrawer({
             <SubTitle>{translate('appointments_page.drawer.date')}</SubTitle>
             <DateText>{formattedStartDate}</DateText>
           </Block>
+
+          {role === USER_ROLE.Caregiver && (
+            <AppointmentModalBlock>
+              <AppointmentModalBlockParagraph>
+                {translate('request_appointment.health_questionnaire')}
+              </AppointmentModalBlockParagraph>
+              <HealthQuestionnaireBlock>
+                {STEPS.map((text, index) => {
+                  const data = [
+                    appointment.seekerDiagnoses.map((diagnosis) => diagnosis.diagnosis.name),
+                    appointment.seekerActivities.map((activity) => activity),
+                    appointment.seekerCapabilities.map((capability) => capability.capability.name),
+                  ][index];
+                  const noteData = [
+                    appointment.diagnosisNote,
+                    appointment.activityNote,
+                    appointment.capabilityNote,
+                  ][index];
+
+                  return (
+                    <Grid container key={index} alignItems="center" padding="5px 0">
+                      <Grid item xs={2}>
+                        <CheckCircle />
+                      </Grid>
+                      <Grid item xs={8}>
+                        {translate(text)}
+                      </Grid>
+                      <Grid item xs={2}>
+                        <ChildModal name={translate(text)} list={data} note={noteData} />
+                      </Grid>
+                    </Grid>
+                  );
+                })}
+              </HealthQuestionnaireBlock>
+            </AppointmentModalBlock>
+          )}
+
           <Block>
             <SubTitle>{translate('appointments_page.drawer.tasks')}</SubTitle>
             <TaskList>
@@ -338,14 +383,7 @@ export default function AppointmentDrawer({
           openVirtualAssessmentSuccess={handleVirtualAssessmentSuccessModalOpen}
         />
       )}
-      {/* {role === USER_ROLE.Caregiver && (
-        <AppointmentRequestModal
-          appointment={appointment}
-          isOpen={isVirtualAssessmentModalOpen}
-          onClose={handleVirtualAssessmentModalClose}
-          openDrawer={openOriginalAppointment}
-        />
-      )} */}
+
       {role === USER_ROLE.Caregiver && (
         <VirtualAssessmentRequestModal
           appointment={appointment}
