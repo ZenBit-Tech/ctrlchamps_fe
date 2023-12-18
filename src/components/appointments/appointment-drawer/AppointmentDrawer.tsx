@@ -15,9 +15,9 @@ import Modal from 'src/components/reusable/modal/Modal';
 import { APPOINTMENT_STATUS, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
 import { useLocales } from 'src/locales';
 
-import AppointmentRequestModal from 'src/components/appointment-request-modal/AppointmentRequestModal';
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
+import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { useAppointmentDrawer } from './hooks';
 import {
@@ -97,6 +97,8 @@ export default function AppointmentDrawer({
 
   if (isLoading) return null;
 
+  if (!appointment) return null;
+
   const VIRTUAL_COMPONENT = (
     <>
       {virtualAssessment?.status === VIRTUAL_ASSESSMENT_STATUS.Finished ? (
@@ -107,7 +109,10 @@ export default function AppointmentDrawer({
         <StyledButton
           type="button"
           variant="contained"
-          disabled={virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted}
+          disabled={
+            virtualAssessment?.status !== VIRTUAL_ASSESSMENT_STATUS.Accepted &&
+            role === USER_ROLE.Seeker
+          }
           onClick={handleVirtualAssessmentModalOpen}
         >
           {translate('appointments_page.virtual_button')}
@@ -170,7 +175,7 @@ export default function AppointmentDrawer({
         </CancelBtn>
       </DoubleButtonBox>
     ),
-    [APPOINTMENT_STATUS.Virtual]: role === USER_ROLE.Seeker && VIRTUAL_COMPONENT,
+    [APPOINTMENT_STATUS.Virtual]: VIRTUAL_COMPONENT,
     [APPOINTMENT_STATUS.SignedCaregiver]: role === USER_ROLE.Seeker && VIRTUAL_COMPONENT,
     [APPOINTMENT_STATUS.SignedSeeker]: role === USER_ROLE.Caregiver && VIRTUAL_COMPONENT,
   };
@@ -333,11 +338,19 @@ export default function AppointmentDrawer({
           openVirtualAssessmentSuccess={handleVirtualAssessmentSuccessModalOpen}
         />
       )}
-      {role === USER_ROLE.Caregiver && appointment && (
+      {/* {role === USER_ROLE.Caregiver && (
         <AppointmentRequestModal
           appointment={appointment}
           isOpen={isVirtualAssessmentModalOpen}
           onClose={handleVirtualAssessmentModalClose}
+          openDrawer={openOriginalAppointment}
+        />
+      )} */}
+      {role === USER_ROLE.Caregiver && (
+        <VirtualAssessmentRequestModal
+          appointment={appointment}
+          isOpen={isVirtualAssessmentModalOpen}
+          switchModalVisibility={handleVirtualAssessmentModalClose}
           openDrawer={openOriginalAppointment}
         />
       )}
