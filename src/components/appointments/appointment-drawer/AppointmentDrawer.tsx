@@ -292,7 +292,7 @@ export default function AppointmentDrawer({
                   return (
                     <Grid container key={index} alignItems="center" padding="5px 0">
                       <Grid item xs={2}>
-                        <CheckCircle />
+                        <CheckCircle color="primary" />
                       </Grid>
                       <Grid item xs={8}>
                         {translate(text)}
