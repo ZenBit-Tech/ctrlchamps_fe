@@ -42,9 +42,3 @@ export type SeekerInfo = {
   firstName: string;
   lastName: string;
 };
-
-export type DetailedAppointment = Appointment & {
-  seekerTasks: SeekerTask[];
-  caregiverInfo: CaregiverInfo;
-  user: SeekerInfo;
-};

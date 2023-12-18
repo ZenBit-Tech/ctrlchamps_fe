@@ -33,12 +33,11 @@ type Props = {
   setActiveTab: Dispatch<SetStateAction<ActiveTab>>;
 };
 
-export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element {
+export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Element | null {
   const { translate } = useLocales();
 
   const user = useTypedSelector((state) => state.user.user);
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>(TabType.appointment);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
   if (!user) return null;
@@ -56,8 +55,8 @@ export default function MainHeader({ activeTab, setActiveTab }: Props): JSX.Elem
           <SecondPart>{translate('logo_second_part')}</SecondPart>
         </Logo>
         <AppointmentsSection
-          onClick={(): void => chooseActiveTab(TabType.appointment)}
-          className={activeTab === TabType.appointment ? 'active_tab' : ''}
+          onClick={(): void => chooseActiveTab(TabType.mainPage)}
+          className={activeTab === TabType.mainPage ? 'active_tab' : ''}
         >
           <AppointmentsIcon />
           <AppointmentsText>

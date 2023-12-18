@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
+import CaregiverSchedulePage from 'src/components/caregiver-schedule/CaregiverSchedulePage';
 import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 import { DEFAULT_REDIRECT_PATH, USER_ROLE } from 'src/constants';
 import { useTypedSelector } from 'src/redux/store';
 import AppointmentsPage from '../components/appointments/AppointmentsPage';
-import CaregiverSchedulePage from '../components/caregiver-schedule/CaregiverSchedulePage';
 
 export default function HomePage(): JSX.Element | null {
   const router = useRouter();

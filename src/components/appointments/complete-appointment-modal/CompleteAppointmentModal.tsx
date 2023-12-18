@@ -1,33 +1,33 @@
-import { MouseEvent } from 'react';
 import { ChevronRight } from '@mui/icons-material';
+import { MouseEvent } from 'react';
 
-import { useLocales } from 'src/locales';
 import Cross from 'src/assets/icons/Cross';
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
 import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
-import { DetailedAppointment } from 'src/components/appointments/types';
 import { USER_ROLE } from 'src/constants';
+import { useLocales } from 'src/locales';
 
+import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import {
   BackDrop,
-  ModalWrapper,
-  ModalHeader,
-  CloseButton,
-  HeaderTitle,
   Block,
-  ModalBody,
+  CancelBtn,
   CaregiverBlock,
   CaregiverName,
-  DrawerAvatar,
-  StyledIconButton,
-  SubTitle,
-  TaskList,
-  Task,
+  CloseButton,
   DoubleButtonBox,
-  StyledButton,
-  CancelBtn,
+  DrawerAvatar,
+  HeaderTitle,
+  ModalBody,
+  ModalHeader,
+  ModalWrapper,
   OpenAppointmentBlock,
   OpenAppointmentText,
+  StyledButton,
+  StyledIconButton,
+  SubTitle,
+  Task,
+  TaskList,
 } from './styles';
 
 interface IProps {
@@ -79,7 +79,7 @@ export default function CompleteAppointmentModal({
               </StyledIconButton>
             </OpenAppointmentBlock>
           </Block>
-          {role === USER_ROLE.seeker ? (
+          {role === USER_ROLE.Seeker ? (
             <Block>
               <SubTitle>{translate('appointments_page.drawer.caregiver')}</SubTitle>
               <CaregiverBlock>

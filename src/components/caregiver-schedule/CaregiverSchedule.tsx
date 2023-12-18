@@ -1,9 +1,9 @@
 import { CalendarPicker } from '@mui/x-date-pickers';
-import { useState } from 'react';
 import { format } from 'date-fns';
+import { useState } from 'react';
 import CreateAppointmentIcon from 'src/assets/icons/CreateAppointmentIcon';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
-import { CURRENT_DAY, BACKEND_DATE_FORMAT, USER_ROLE } from 'src/constants';
+import { BACKEND_DATE_FORMAT, CURRENT_DAY, USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { useGetAppointmentsByDateQuery } from 'src/redux/api/appointmentApi';
 import CaregiverAppointment from './CaregiverAppointment';
@@ -72,18 +72,14 @@ export default function CaregiverSchedule({
           <AppointmentsContainer>
             {selectedAppointmentId && (
               <AppointmentDrawer
-                role={USER_ROLE.caregiver}
+                role={USER_ROLE.Caregiver}
                 selectedAppointmentId={selectedAppointmentId}
                 isOpen={isDrawerOpen}
                 onClose={closeDrawer}
                 setIsDrawerOpen={setIsDrawerOpen}
               />
             )}
-            <CaregiverAppointment
-              appointmentDays={appointments}
-              appointmentDay={chosenDay}
-              openDrawer={openDrawer}
-            />
+            <CaregiverAppointment appointmentDays={appointments} openDrawer={openDrawer} />
           </AppointmentsContainer>
         ) : (
           <NoAppointmentsContainer>
