@@ -5,17 +5,18 @@ import { useSelector } from 'react-redux';
 
 import { useSignUpMutation } from 'src/redux/api/authApi';
 import { RootState } from 'src/redux/rootReducer';
-import { useAppDispatch } from 'src/redux/store';
 import { setToken } from 'src/redux/slices/tokenSlice';
+import { useAppDispatch } from 'src/redux/store';
 
 import SignUpFooter from 'src/components/reusable/footer';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import SignUpWrapper from 'src/components/reusable/sign-up-wrapper/SignUpWrapper';
 
 import SignUpFirstForm from 'src/components/sign-up-first';
+import SignUpFourthForm from 'src/components/sign-up-fourth';
 import SignUpSecondForm from 'src/components/sign-up-second';
 import SignUpThirdForm from 'src/components/sign-up-third';
-import SignUpFourthForm from 'src/components/sign-up-fourth';
+import { UserRole } from 'src/redux/slices/userSlice';
 
 const STEPS = {
   first: 1,
@@ -79,7 +80,7 @@ function SignUp(): JSX.Element {
         <>
           {step === STEPS.first && <SignUpFirstForm onNext={handleSecondStep} />}
           {step === STEPS.second && (
-            <SignUpSecondForm role={(role as 'seeker') || 'caregiver'} onNext={handleThirdStep} />
+            <SignUpSecondForm role={role as UserRole} onNext={handleThirdStep} />
           )}
           {step === STEPS.third && <SignUpThirdForm onNext={handleFourthStep} />}
           {step === STEPS.fourth && <SignUpFourthForm onNext={handleSignUp} />}

@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { useState } from 'react';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -8,10 +9,12 @@ import { CloseButton, HeaderTitle, ModalHeader } from 'src/components/confirm-ap
 import Appointment from 'src/components/create-appointment/Appointment';
 import { selectTimeOptions } from 'src/components/create-appointment/constants';
 import { ErrorText, FilledButton } from 'src/components/reusable';
+import { APPOINTMENT_STATUS, BACKEND_DATE_FORMAT, URL_PATTERN } from 'src/constants';
 import { useLocales } from 'src/locales';
+import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
 
 import RightAction from 'src/assets/icons/RightAction';
-import { URL_PATTERN } from 'src/constants';
+import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import {
   AppointmentModal,
   AppointmentModalBlock,
@@ -26,6 +29,7 @@ import {
   ModalBody,
   NameParagraph,
   NotificationMessage,
+  StyledIconButton,
 } from './styles';
 
 type Props = {
@@ -35,6 +39,7 @@ type Props = {
   openCaregiverProfile: () => void;
   openVirtualAssessmentSuccess: () => void;
   caregiverName: string;
+  appointmentId: string;
 };
 
 export default function VirtualAssessmentModal({
@@ -44,6 +49,7 @@ export default function VirtualAssessmentModal({
   openCaregiverProfile,
   openVirtualAssessmentSuccess,
   caregiverName,
+  appointmentId,
 }: Props): JSX.Element | null {
   const { translate } = useLocales();
 
@@ -53,6 +59,12 @@ export default function VirtualAssessmentModal({
   const [meetingLink, setMeetingLink] = useState<string>('');
   const [isLinkCopied, setIsLinkCopied] = useState<boolean>(false);
   const [invalidTime, setInvalidTime] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<boolean>(false);
+
+  const [requestVirtualAssessment, { isLoading }] =
+    virtualAssessmentApi.useMakeVirtualAssessmentRequestMutation();
+
+  const [updateAppointment] = useUpdateAppointmentMutation();
 
   const isButtonDisabled =
     !date ||
@@ -60,7 +72,8 @@ export default function VirtualAssessmentModal({
     !endTime ||
     invalidTime ||
     startTime === endTime ||
-    !URL_PATTERN.test(meetingLink);
+    !URL_PATTERN.test(meetingLink) ||
+    serverError;
 
   const checkTimeValidity = (condition: boolean): void => {
     if (condition) {
@@ -82,8 +95,28 @@ export default function VirtualAssessmentModal({
 
   const chooseDate = (value: Date | null): void => setDate(value);
 
-  const requestAssessment = (): void => {
-    openVirtualAssessmentSuccess();
+  const requestAssessment = async (): Promise<void> => {
+    try {
+      if (!date) return;
+      if (!isLoading) setServerError(false);
+
+      await requestVirtualAssessment({
+        startTime,
+        endTime,
+        assessmentDate: format(date, BACKEND_DATE_FORMAT),
+        meetingLink,
+        appointmentId,
+      }).unwrap();
+
+      await updateAppointment({
+        id: appointmentId,
+        status: APPOINTMENT_STATUS.Virtual,
+      }).unwrap();
+
+      openVirtualAssessmentSuccess();
+    } catch (err) {
+      setServerError(true);
+    }
   };
 
   const copyLink = (): void => {
@@ -127,9 +160,9 @@ export default function VirtualAssessmentModal({
             <InlineBlock>
               <Avatar />
               <NameParagraph>{caregiverName}</NameParagraph>
-              <IconButton color="secondary" onClick={openCaregiverProfile}>
+              <StyledIconButton color="secondary" onClick={openCaregiverProfile}>
                 <RightAction />
-              </IconButton>
+              </StyledIconButton>
             </InlineBlock>
           </AppointmentModalBlock>
 
@@ -179,6 +212,11 @@ export default function VirtualAssessmentModal({
             <FilledButton onClick={requestAssessment} disabled={isButtonDisabled} fullWidth>
               {translate('request_appointment.btns.request')}
             </FilledButton>
+            {serverError && (
+              <ErrorText textAlign="center">
+                {translate('request_appointment.server_error')}
+              </ErrorText>
+            )}
           </AppointmentModalFooter>
         </ModalBody>
       </AppointmentModal>
