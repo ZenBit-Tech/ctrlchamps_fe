@@ -27,7 +27,6 @@ const AppointmentRequestModal = ({
   appointment,
   isOpen,
   onClose,
-  openDrawer,
 }: AppointmentRequestModalProps): JSX.Element => {
   const { translate } = useLocales();
   const [updateAppointment] = useUpdateAppointmentMutation();

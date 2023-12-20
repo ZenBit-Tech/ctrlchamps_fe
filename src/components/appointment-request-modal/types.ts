@@ -25,5 +25,4 @@ export type AppointmentRequestModalProps = {
   appointment: DetailedAppointment;
   isOpen: boolean;
   onClose: () => void;
-  openDrawer: () => void;
 };

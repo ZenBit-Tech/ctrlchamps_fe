@@ -1,6 +1,9 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import { useGetAppointmentQuery, DetailedAppointment } from 'src/redux/api/appointmentApi';
-import { useGetVirtualAssessmentInfoQuery, VirtualAssessment } from 'src/redux/api/virtualAssessmentApi';
+import {
+  useGetVirtualAssessmentInfoQuery,
+  VirtualAssessment,
+} from 'src/redux/api/virtualAssessmentApi';
 import { getFormattedDate } from '../helpers';
 
 interface IProps {
