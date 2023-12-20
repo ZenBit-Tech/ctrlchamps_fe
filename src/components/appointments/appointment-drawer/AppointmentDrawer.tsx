@@ -1,8 +1,11 @@
-import { Checkbox, FormControlLabel, Grid, IconButton } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
+import { Checkbox, FormControlLabel, Grid, IconButton } from '@mui/material';
+import { CheckCircle } from '@mui/icons-material';
 
+import { useLocales } from 'src/locales';
 import ArrowBackFilled from 'src/assets/icons/ArrowBackFilled';
 import RightAction from 'src/assets/icons/RightAction';
+
 import AgreementModal from 'src/components/appointments/agreement-modal/AgreementModal';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import CancelModal from 'src/components/appointments/cancel-modal/CancelModal';
@@ -10,12 +13,11 @@ import CompleteAppointmentModal from 'src/components/appointments/complete-appoi
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
 import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
 import Drawer from 'src/components/reusable/drawer/Drawer';
-import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
 import Modal from 'src/components/reusable/modal/Modal';
+import { DrawerFooter, DrawerHeader, DrawerTitle } from 'src/components/reusable/drawer/styles';
 import { APPOINTMENT_STATUS, USER_ROLE, VIRTUAL_ASSESSMENT_STATUS } from 'src/constants';
-import { useLocales } from 'src/locales';
+import { STEPS } from 'src/components/health-questionnaire/constants';
 
-import { CheckCircle } from '@mui/icons-material';
 import { ChildModal } from 'src/components/appointment-request-modal/ChildModal';
 import {
   AppointmentModalBlock,
@@ -24,8 +26,8 @@ import {
 } from 'src/components/appointment-request-modal/styles';
 import VirtualAssessmentSuccess from 'src/components/appointments/request-sent-modal/VirtualAssessmentSuccess';
 import VirtualAssessmentModal from 'src/components/appointments/virtual-assessment-modal/VirtualAssessmentModal';
-import { STEPS } from 'src/components/health-questionnaire/constants';
 import VirtualAssessmentRequestModal from 'src/components/virtual-assessment-request/VirtualAssessmentRequest';
+
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
 import { useAppointmentDrawer } from './hooks';
 import {

@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 
 import MainHeader from 'src/components/reusable/header/MainHeader';
+import CaregiverSchedule from 'src/components/caregiver-schedule/CaregiverSchedule';
 import { USER_ROLE } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { TabType } from '../reusable/header/enums';
 import { ActiveTab } from '../reusable/header/types';
-import CaregiverSchedule from './CaregiverSchedule';
 
 export default function CaregiverSchedulePage(): JSX.Element | null {
   const { translate } = useLocales();

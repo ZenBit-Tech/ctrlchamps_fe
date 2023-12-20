@@ -70,12 +70,6 @@ export default function CaregiverSchedule({
 
         {isSuccess && appointments.length > 0 ? (
           <AppointmentsContainer>
-            {/* <AppointmentRequestModal
-              appointment={appointment}
-              isOpen={isVirtualAssessmentModalOpen}
-              onClose={handleVirtualAssessmentModalClose}
-              openDrawer={openOriginalAppointment}
-            /> */}
             {selectedAppointmentId && (
               <AppointmentDrawer
                 role={USER_ROLE.Caregiver}

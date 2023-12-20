@@ -17,6 +17,7 @@ import SignUpFourthForm from 'src/components/sign-up-fourth';
 import SignUpSecondForm from 'src/components/sign-up-second';
 import SignUpThirdForm from 'src/components/sign-up-third';
 import { UserRole } from 'src/redux/slices/userSlice';
+import { ROUTES } from 'src/routes';
 
 const STEPS = {
   first: 1,
@@ -52,6 +53,7 @@ function SignUp(): JSX.Element {
       const { token }: { token: string } = await signUp({ ...userInfo, password }).unwrap();
 
       dispatch(setToken(token));
+      router.push(ROUTES.account_verification);
     } catch (error) {
       throw new Error(error);
     }
