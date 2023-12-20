@@ -287,7 +287,7 @@ const en = {
   appointmentSteps: {
     appointmentType: 'Appointment Type',
     scheduling: 'Scheduling',
-    healthQuestioner: 'Health Questioner',
+    healthQuestioner: 'Health Questionnaire',
     findCaregiver: 'Find Caregiver',
     confirm: 'Confirm',
   },

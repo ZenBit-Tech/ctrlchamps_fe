@@ -7,10 +7,12 @@ import AppointmentsPage from '../components/appointments/AppointmentsPage';
 
 export default function HomePage(): JSX.Element | null {
   const router = useRouter();
+
   const user = useTypedSelector((state) => state.user.user);
 
   if (!user) {
     router.replace(DEFAULT_REDIRECT_PATH);
+
     return null;
   }
 
