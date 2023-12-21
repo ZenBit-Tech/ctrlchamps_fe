@@ -69,7 +69,7 @@ export default function CaregiverSchedule({
         )}
 
         {isSuccess && appointments.length > 0 ? (
-          <AppointmentsContainer>
+          <AppointmentsContainer className={!isCalendarVisible ? 'center' : ''}>
             {selectedAppointmentId && (
               <AppointmentDrawer
                 role={USER_ROLE.Caregiver}

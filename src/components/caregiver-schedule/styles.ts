@@ -99,6 +99,11 @@ const AppointmentsContainer = styled('div')`
   border-radius: 4px;
   overflow-y: scroll;
   box-shadow: 0px 4px 4px 0px ${SECONDARY.light_gray};
+  max-width: 820px;
+
+  &.center {
+    margin: 0 auto;
+  }
 
   &::-webkit-scrollbar {
     width: 0px;

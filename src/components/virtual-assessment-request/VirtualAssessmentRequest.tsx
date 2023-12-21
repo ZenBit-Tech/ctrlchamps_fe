@@ -1,7 +1,7 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import { Avatar, Button, IconButton, List, ListItemText } from '@mui/material';
+import { Avatar, Button, IconButton, List, ListItemText, Typography } from '@mui/material';
 import { format } from 'date-fns';
 
 import { DRAWER_DATE_FORMAT } from 'src/components/appointments/constants';
@@ -31,6 +31,7 @@ import {
 
 const decodeToken = (tokenToDecode: string): string => {
   const decoded: { id: string } = jwt_decode(tokenToDecode);
+
   return decoded.id;
 };
 
@@ -125,7 +126,9 @@ const VirtualAssessmentRequestModal = ({
               <ContentCopyIcon color="primary" fontSize="small" onClick={copyMeetingLink} />
             </Button>
           </AppointmentModalBlockParagraph>
-          {appointment.virtualAssessment && appointment.virtualAssessment.meetingLink}
+          {appointment.virtualAssessment && (
+            <Typography overflow="hidden">{appointment.virtualAssessment.meetingLink}</Typography>
+          )}
         </AppointmentModalBlock>
 
         <AppointmentModalFooter>
