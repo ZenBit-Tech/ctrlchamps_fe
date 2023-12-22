@@ -1,9 +1,9 @@
-import { format } from 'date-fns';
 import { useState } from 'react';
-
+import { format } from 'date-fns';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { Alert, Avatar, IconButton, Snackbar, TextField } from '@mui/material';
+
 import Cross from 'src/assets/icons/Cross';
 import { CloseButton, HeaderTitle, ModalHeader } from 'src/components/confirm-appointment/style';
 import Appointment from 'src/components/create-appointment/Appointment';
@@ -12,9 +12,9 @@ import { ErrorText, FilledButton } from 'src/components/reusable';
 import { APPOINTMENT_STATUS, BACKEND_DATE_FORMAT, URL_PATTERN } from 'src/constants';
 import { useLocales } from 'src/locales';
 import { virtualAssessmentApi } from 'src/redux/api/virtualAssessmentApi';
-
 import RightAction from 'src/assets/icons/RightAction';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
+
 import {
   AppointmentModal,
   AppointmentModalBlock,

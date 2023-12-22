@@ -1,5 +1,7 @@
 import { Avatar, Button, Grid, List, ListItemText } from '@mui/material';
 import { format } from 'date-fns';
+
+import { useLocales } from 'src/locales';
 import CheckCircle from 'src/assets/icons/CheckCircle';
 import { ChildModal } from 'src/components/appointment-request-modal/ChildModal';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
@@ -8,8 +10,9 @@ import { STEPS } from 'src/components/health-questionnaire/constants';
 import { FilledButton } from 'src/components/reusable';
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { APPOINTMENT_STATUS } from 'src/constants';
-import { useLocales } from 'src/locales';
 import { useUpdateAppointmentMutation } from 'src/redux/api/appointmentApi';
+
+import { AppointmentRequestModalProps } from './types';
 import {
   AppointmentModal,
   AppointmentModalBlock,
@@ -21,7 +24,6 @@ import {
   ListItemStyled,
   NameParagraph,
 } from './styles';
-import { AppointmentRequestModalProps } from './types';
 
 const AppointmentRequestModal = ({
   appointment,

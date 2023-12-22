@@ -1,5 +1,4 @@
-import { IconButton, ListItem, styled } from '@mui/material';
-import RightAction from 'src/assets/icons/RightAction';
+import { ListItem, IconButton, styled } from '@mui/material';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';

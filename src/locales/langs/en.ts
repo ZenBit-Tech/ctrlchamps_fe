@@ -2,6 +2,7 @@ import { MAX_RATE, MIN_RATE } from 'src/components/complete-profile-fifth/consta
 
 import {
   MAX_APPOINTMENT_NAME_LENGTH,
+  MIN_APPOINTMENT_HOUR_DURATION,
   MIN_APPOINTMENT_NAME_LENGTH,
 } from 'src/components/create-appointment/constants';
 
@@ -292,7 +293,8 @@ const en = {
     confirm: 'Confirm',
   },
   create_appointment: {
-    duration: 'Appointment duration is {{hours}}h {{minutes}}m',
+    duration: 'Appointment duration is {{hours}}h',
+    duration_with_minutes: 'Appointment duration is {{hours}}h {{minutes}}m',
     header_text: 'new appointment',
     header_recurring: 'recurring appointment',
     header_one_time: 'one-time appointment',
@@ -326,6 +328,9 @@ const en = {
     errors: {
       min_type_char: `Appointment name should contain more than ${MIN_APPOINTMENT_NAME_LENGTH} characters`,
       max_type_char: `You cannot enter more than ${MAX_APPOINTMENT_NAME_LENGTH} characters`,
+      min_appointment_duration: `An appointment should last for at least ${MIN_APPOINTMENT_HOUR_DURATION} hour.`,
+      invalid_week_days:
+        'According to the set date period, you can choose in range from {{dayFrom}} to {{dayTo}}',
     },
   },
   confirm_appointment: {
@@ -636,6 +641,31 @@ const en = {
       accept: 'Accept',
       view: 'View',
     },
+  },
+  accountDetails: {
+    title: 'Account Details',
+    avatarText: 'Upload Photo',
+    personalInfo: 'Personal Information',
+    address: 'Address',
+    password: 'Password',
+    updatePassword: 'Update Password',
+    fileFormatError: 'Allowed avatar formats: png, jpeg, heic',
+    fileSizeError: 'Avatar size must be maximum 5 mb',
+    labels: {
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'E-mail Address',
+      phone: 'Phone Number',
+      birthDate: 'Date of Birth',
+      isOpen: 'I`m open to living in clients` houses',
+      country: 'Country',
+      state: 'State',
+      city: 'City',
+      zip: 'ZIP Code',
+      street: 'Street, suite, etc',
+    },
+    personalInfoModal: { title: 'Edit Personal Information', saveButton: 'Save' },
+    addressModal: { title: 'Edit Address' },
   },
 };
 

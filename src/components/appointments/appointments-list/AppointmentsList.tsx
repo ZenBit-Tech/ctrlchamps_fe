@@ -1,6 +1,7 @@
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
 
+import { useTypedSelector } from 'src/redux/store';
 import RightAction from 'src/assets/icons/RightAction';
 import AppointmentDrawer from 'src/components/appointments/appointment-drawer/AppointmentDrawer';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';

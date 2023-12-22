@@ -1,6 +1,7 @@
 import { APPOINTMENT_TYPE } from 'src/constants';
 import { useLocales } from 'src/locales';
 
+import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import {
   CURRENT_DATE,
   MILEAGE_PRICE,
@@ -9,7 +10,6 @@ import {
 } from 'src/components/appointments/constants';
 import { getHoursForWeek } from 'src/components/appointments/helpers';
 
-import { DetailedAppointment } from 'src/redux/api/appointmentApi';
 import { Container, Span, SubTitle, Task, TaskList, Text } from './styles';
 
 interface IProps {

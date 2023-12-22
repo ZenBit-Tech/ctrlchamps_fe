@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { PrivateRoute } from 'src/components/private-route/PrivateRoute';
 
+import CaregiverSchedule from 'src/components/caregiver-schedule/CaregiverSchedule';
 import MainHeader from 'src/components/reusable/header/MainHeader';
 import CaregiverSchedule from 'src/components/caregiver-schedule/CaregiverSchedule';
 import { USER_ROLE } from 'src/constants';

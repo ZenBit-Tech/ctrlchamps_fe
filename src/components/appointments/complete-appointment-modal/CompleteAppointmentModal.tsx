@@ -1,13 +1,13 @@
 import { ChevronRight } from '@mui/icons-material';
 import { MouseEvent } from 'react';
 
+import { useLocales } from 'src/locales';
+import { USER_ROLE } from 'src/constants';
 import Cross from 'src/assets/icons/Cross';
 import { SMALL_CAREGIVER_AVATAR_SIZE } from 'src/components/appointments/constants';
 import { getMockCaregiverAvatar } from 'src/components/appointments/helpers';
-import { USER_ROLE } from 'src/constants';
-import { useLocales } from 'src/locales';
-
 import { DetailedAppointment } from 'src/redux/api/appointmentApi';
+
 import {
   BackDrop,
   Block,

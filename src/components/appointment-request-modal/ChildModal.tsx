@@ -1,8 +1,10 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Button, List, Modal, TextField } from '@mui/material';
 import { useState } from 'react';
+
 import FlowHeader from 'src/components/reusable/header/FlowHeader';
 import { useLocales } from 'src/locales';
+
 import { SeekerActivity } from 'src/redux/api/appointmentApi';
 
 import {

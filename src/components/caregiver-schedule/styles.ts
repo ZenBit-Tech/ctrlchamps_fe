@@ -1,10 +1,10 @@
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Avatar, Typography, styled } from '@mui/material';
+import { FilledButton } from 'src/components/reusable';
 import { HEADER } from 'src/config-global';
 import { PRIMARY, SECONDARY } from 'src/theme/colors';
 import { TYPOGRAPHY } from 'src/theme/fonts';
 import typography from 'src/theme/typography';
-import { FilledButton } from 'src/components/reusable';
 
 const Background = styled('div')`
   background-color: ${PRIMARY.light_main};
@@ -175,24 +175,24 @@ const Details = styled('div')`
 `;
 
 export {
-  HeaderText,
   AppointmentDetails,
-  AppointmentInfo,
   AppointmentHeader,
+  AppointmentInfo,
   AppointmentsContainer,
   Arrow,
   AvatarIcon,
   Background,
   BaseText,
-  NoAppointmentsContainer,
   CalendarBtn,
   CalendarContainer,
   Container,
   Details,
+  HeaderText,
   IconBackground,
-  TextContainer,
   MainText,
-  TaskText,
+  NoAppointmentsContainer,
   Task,
+  TaskText,
   Text,
+  TextContainer,
 };

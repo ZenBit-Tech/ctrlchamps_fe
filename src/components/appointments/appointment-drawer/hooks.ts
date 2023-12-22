@@ -19,9 +19,9 @@ type ReturnType = {
   isVirtualAssessmentSuccessOpen: boolean;
   isTermsAccepted: boolean;
   isLoading: boolean;
+  virtualAssessment: VirtualAssessment | undefined;
   appointment: DetailedAppointment | undefined;
   formattedStartDate: string | undefined;
-  virtualAssessment: VirtualAssessment | undefined;
   handleCancelModalOpen: () => void;
   handleCancelModalClose: () => void;
   handleCompleteModalOpen: () => void;
@@ -114,9 +114,9 @@ export function useAppointmentDrawer({
     isVirtualAssessmentSuccessOpen,
     isTermsAccepted,
     isLoading,
+    virtualAssessment,
     appointment,
     formattedStartDate,
-    virtualAssessment,
     handleCancelModalOpen,
     handleCancelModalClose,
     handleCompleteModalOpen,
