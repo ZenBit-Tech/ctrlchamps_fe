@@ -22,6 +22,7 @@ export const SECONDARY = {
   error_hover: 'rgba(198, 40, 40, 0.08)',
   caregiver_profile_background: 'rgba(255, 255, 255, 1)',
   error: '#FF0000',
+  table_background: 'rgba(0, 0, 0, 0.05)',
 };
 
 export const TEXT_COLOR = {
