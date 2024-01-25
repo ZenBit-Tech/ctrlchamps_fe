@@ -7,7 +7,7 @@
 2. Clone this repo.
 3. Install the basic project dependencies [(Installation)](https://github.com/ZenBit-Tech/ctrlchamps_fe?tab=readme-ov-file#installation).
 4. Create .env.local file @ apps/freelance (near env.example file). Should include variables from example file with correct values
-5. Start development mode [(Running the app)](https://github.comZenBit-Tech/ctrlchamps_fe?tab=readme-ov-file#running-the-app).
+5. Start development mode [(Running the app)](https://github.com/ZenBit-Tech/ctrlchamps_fe?tab=readme-ov-file#running-the-app).
 6. Navigate to the address in your browser
    [http://localhost:3000](http://localhost:3000). This page will automatically
    reload after saving changes to project files.
