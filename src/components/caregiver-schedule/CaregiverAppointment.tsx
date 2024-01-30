@@ -3,7 +3,7 @@ import AccessTimeIcon from 'src/assets/icons/AccessTimeIcon';
 import AppointmentStatus from 'src/components/appointments/appointment-status/AppointmentStatus';
 import { APPOINTMENT_STATUS, DISPLAY_TIME_FORMAT, TINY_AVATAR_SIZE } from 'src/constants';
 import { useLocales } from 'src/locales';
-import { formatTimeToTimezone, formatUTCToTimezone } from 'src/utils/formatTime';
+import { formatTimeToTimezone } from 'src/utils/formatTime';
 import {
   AppointmentDetails,
   AppointmentHeader,
@@ -43,8 +43,9 @@ export default function CaregiverAppointment({ appointmentDays, openDrawer }: Pr
                 {appointment.status === APPOINTMENT_STATUS.Virtual &&
                 appointment.virtualAssessment ? (
                   <Text>
-                    {formatUTCToTimezone(
+                    {formatTimeToTimezone(
                       `${appointment.virtualAssessment.assessmentDate} ${appointment.virtualAssessment.startTime}`,
+                      appointment.timezone,
                       DISPLAY_TIME_FORMAT
                     )}
                   </Text>
